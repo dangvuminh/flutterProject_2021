@@ -4,7 +4,14 @@ class SignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+        floatingActionButton: FloatingActionButton(
+          child: Icon(
+            Icons.chevron_right,
+          ),
+          onPressed: (){
+            Navigator.pushNamed(context, '/signInList');
+          },
+        ),
       appBar: AppBar(
         title: Text('Sign In'),
         backgroundColor: Colors.grey[850],

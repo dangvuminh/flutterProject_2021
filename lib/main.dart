@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/SignIn.dart';
 import 'package:mobile_flutter/Home.dart';
+import 'package:mobile_flutter/SignInList.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -9,6 +10,7 @@ void main() {
     routes: {
       '/':(context) => Home(),
       '/signIn':(context) => SignIn(),
+      '/signInList':(context) => SignInList(),
     },
   ));
 }

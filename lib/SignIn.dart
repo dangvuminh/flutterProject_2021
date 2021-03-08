@@ -14,7 +14,7 @@ class SignIn extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              height: 300.0,
+              height: 250.0,
             ),
             Expanded(child: Container(
               child: Column(
@@ -68,7 +68,6 @@ class SignIn extends StatelessWidget {
                             border: OutlineInputBorder(),
                             fillColor: Colors.grey[600],
                             filled: true,
-
                           ),
                         ),
                         Padding(
@@ -99,6 +98,48 @@ class SignIn extends StatelessWidget {
                       color: Colors.lightBlue,
                     ),
                   ),
+                  SizedBox(height: 20.0),
+                  Text(
+                      'Need help ?',
+                      style: TextStyle(
+                        color: Colors.lightBlue,
+                      )
+                  ),
+                  SizedBox(height: 20.0),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(80, 10, 80, 10),
+                    child: Text(
+                        'Use Single Sign-On (SSO)',
+                        style: TextStyle(
+                          decoration: TextDecoration.none,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.lightBlue,
+                          fontSize: 18.0,
+                        )
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.lightBlue),
+                      borderRadius: BorderRadius.all(Radius.circular(3.0)),
+                    ),
+                  ),
+                  SizedBox(height: 15.0),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(90, 10, 90, 10),
+                    child: Text(
+                        'Subscribe to PluralSight',
+                        style: TextStyle(
+                          decoration: TextDecoration.none,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.lightBlue,
+                          fontSize: 18.0,
+                        )
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.lightBlue),
+                      borderRadius: BorderRadius.all(Radius.circular(3.0)),
+                    ),
+                  ),
+                  SizedBox(height: 15.0),
                 ],
               ),
             )),

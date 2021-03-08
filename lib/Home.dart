@@ -40,7 +40,7 @@ class Home extends StatelessWidget {
                 ),
                 SizedBox(height: 30.0),
                 Container(
-                  padding: EdgeInsets.fromLTRB(150, 10, 150, 10),
+                  padding: EdgeInsets.fromLTRB(175, 10, 175, 10),
                   child: Text(
                       'Sign In',
                       style: TextStyle(
@@ -53,11 +53,12 @@ class Home extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.black),
                     color: Colors.lightBlue,
+                    borderRadius: BorderRadius.all(Radius.circular(3.0)),
                   ),
                 ),
                 SizedBox(height: 15.0),
                 Container(
-                  padding: EdgeInsets.fromLTRB(71, 10, 71, 10),
+                  padding: EdgeInsets.fromLTRB(95, 10, 95, 10),
                   child: Text(
                       'Subscribe to PluralSight',
                       style: TextStyle(
@@ -69,13 +70,14 @@ class Home extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.lightBlue),
+                    borderRadius: BorderRadius.all(Radius.circular(3.0)),
                   ),
                 ),
                 SizedBox(height: 15.0),
                 Container(
-                  padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
+                  padding: EdgeInsets.fromLTRB(67, 10, 67, 10),
                   child: Text(
-                      'Explore without a subcription',
+                      'Explore without a subscription',
                       style: TextStyle(
                         decoration: TextDecoration.none,
                         fontWeight: FontWeight.w600,
@@ -85,6 +87,7 @@ class Home extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.lightBlue),
+                    borderRadius: BorderRadius.all(Radius.circular(3.0)),
                   ),
                 ),
               ],

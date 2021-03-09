@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_flutter/SignIn.dart';
 
 class SignInList extends StatelessWidget {
   @override
@@ -22,7 +21,7 @@ class SignInList extends StatelessWidget {
           Icons.chevron_right,
         ),
         onPressed: (){
-          Navigator.pushNamed(context, '');
+          Navigator.pushNamed(context, '/courses');
         },
       ),
       body: SafeArea(
@@ -32,7 +31,7 @@ class SignInList extends StatelessWidget {
               padding: EdgeInsets.only(top:10.0,bottom:10.0),
               color: Colors.grey[850],
               child: FlatButton(
-                
+
                 child:Row(
                   children: [
                     Icon(

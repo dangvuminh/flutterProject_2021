@@ -113,11 +113,8 @@ class _CoursesState extends State<Courses> {
           courseData : courses,
          authorData : authors,
       ),
-      DownloadTab(),
+      DownloadTab( courseData : courses),
     ];
-  Widget downLoadTab(){
-      return Container();
-  }
 
   void onItemTap(int index){
       setState(() {

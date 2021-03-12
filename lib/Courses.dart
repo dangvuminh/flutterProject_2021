@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_flutter/objects/courseObject.dart';
+import 'package:mobile_flutter/objects/authors.dart';
 import 'package:mobile_flutter/CourseCard.dart';
-class Courses extends StatelessWidget {
+import 'package:mobile_flutter/authorList.dart';
+import 'package:mobile_flutter/nav-bar/download.dart';
+import'package:mobile_flutter/nav-bar/homeCourse.dart';
 
-  List<CourseObject> courses = [
+
+class Courses extends StatefulWidget {
+
+  @override
+  _CoursesState createState() => _CoursesState();
+}
+
+class _CoursesState extends State<Courses> {
+  static List<CourseObject> courses = [
       CourseObject(
         id: 0,
         productImage:'assets/react-flux.jpg',
@@ -15,17 +26,104 @@ class Courses extends StatelessWidget {
         rating: '1,366',
       ),
     CourseObject(
-      id: 0,
-      productImage:'assets/react-flux.jpg',
-      productName: 'Building Applications With React And Flux',
+      id: 1,
+      productImage:'assets/react-redux.jpg',
+      productName: 'Building Applications With React And Redux',
       company: 'Cory House',
       level: 'Intermediate',
+      date: 'Mar 2019',
+      duration: 7,
+      rating: '1,476',
+    ),
+    CourseObject(
+      id: 2,
+      productImage:'assets/react-nodejs.jpg',
+      productName: 'Building Applications With React And NodeJS',
+      company: 'Cory House',
+      level: 'Intermediate',
+      date: 'Feb 2019',
+      duration: 7,
+      rating: '1,476',
+    ),
+
+    CourseObject(
+      id: 3,
+      productImage:'assets/react.jpg',
+      productName: 'React: Getting Started',
+      company: 'Samer Buna',
+      level: 'Beginner',
       date: 'Jun 2019',
-      duration: 5,
-      rating: '1,366',
+      duration: 4,
+      rating: '2,456',
+    ),
+    CourseObject(
+      id: 4,
+      productImage:'assets/react-redux.jpg',
+      productName: 'Building Applications With React And Redux',
+      company: 'Cory House',
+      level: 'Intermediate',
+      date: 'Mar 2019',
+      duration: 7,
+      rating: '1,476',
+    ),
+    CourseObject(
+      id: 5,
+      productImage:'assets/vuejs.jpg',
+      productName: 'Building Applications With VueJS ',
+      company: 'Cory House',
+      level: 'Intermediate',
+      date: 'Feb 2019',
+      duration: 7,
+      rating: '1,476',
     ),
   ];
 
+  static List<Author> authors = [
+    Author(
+      id:0,
+      authorImage: 'assets/tyrion.jpg',
+      authorName: 'Tyrion Lannister',
+    ),
+    Author(
+      id:1,
+      authorImage: 'assets/cercei.png',
+      authorName: 'Cercei Lannister',
+    ),
+    Author(
+      id:2,
+      authorImage: 'assets/danny.jpg',
+      authorName: 'Daenerys Targaryen',
+    ),
+    Author(
+      id:2,
+      authorImage: 'assets/arya.jpg',
+      authorName: 'Arya Stark',
+    ),
+    Author(
+      id:2,
+      authorImage: 'assets/jon.jpg',
+      authorName: 'Jon Snow',
+    ),
+  ];
+
+  int _selectedIndex = 0;
+
+   List<Widget> navTabs = <Widget>[
+      HomeCourse(
+          courseData : courses,
+         authorData : authors,
+      ),
+      DownloadTab(),
+    ];
+  Widget downLoadTab(){
+      return Container();
+  }
+
+  void onItemTap(int index){
+      setState(() {
+        _selectedIndex = index;
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,116 +137,36 @@ class Courses extends StatelessWidget {
           Navigator.pushNamed(context, '');
         },
       ),
+
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+            backgroundColor: Colors.grey,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.download_rounded),
+            label: 'Business',
+            backgroundColor: Colors.green,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.open_in_browser),
+            label: 'School',
+            backgroundColor: Colors.purple,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Settings',
+            backgroundColor: Colors.pink,
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: onItemTap,
+      ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.only(top:10.0,bottom:10.0),
-              color: Colors.grey[850],
-              child: Row(
-                children: [
-                  FlatButton(
-
-                    child:Row(
-                      children: [
-                        Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          'Back',
-                          style: TextStyle(
-                            color:Colors.white,
-                            fontSize: 22.0,
-                          ),
-                        )
-                      ],
-                    ),
-                    onPressed: (){
-                      Navigator.pop(context, '/signInList');
-                    },
-                  ),
-                  Container(
-                      margin:EdgeInsets.only(left: 80.0) ,
-                      child: Text(
-                          'React',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                          )
-                      )
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(15.0),
-              child: Row(
-                children: [
-                  Text(
-                      'New',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                    ),
-                  ),
-                  Expanded(child: Container()),
-                  FlatButton(
-                      onPressed: null,
-                      child: Row(
-                        children: [
-                          Container(
-                            padding:EdgeInsets.all(4.0),
-                            decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                              borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                              color: Colors.grey[850],
-                            ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  'See all',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Icon(
-                                    Icons.keyboard_arrow_right,
-                                    color: Colors.white,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      )
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-              child: Container(
-                height: 250.0,
-                width: 200.0,
-                child: ListView.builder(
-
-                  itemCount:   courses.length,
-                  itemBuilder: ( context,i){
-                      return CourseCard(
-                        id: courses[i].id,
-                        productImage: courses[i].productImage,
-                        productName: courses[i].productName,
-                        company: courses[i].company,
-                        level: courses[i].level,
-                        date: courses[i].date,
-                        duration: courses[i].duration,
-                        rating: courses[i].rating,
-                      );
-
-                  }),
-              ),
-            )
-          ],
-        ),
+        child: navTabs.elementAt(_selectedIndex),
       ),
     );
   }

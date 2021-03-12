@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_flutter/nav-bar/search.dart';
 import 'package:mobile_flutter/objects/courseObject.dart';
 import 'package:mobile_flutter/objects/authors.dart';
 import 'package:mobile_flutter/CourseCard.dart';
@@ -114,6 +115,8 @@ class _CoursesState extends State<Courses> {
          authorData : authors,
       ),
       DownloadTab( courseData : courses),
+      Text('Browse'),
+      Search(),
     ];
 
   void onItemTap(int index){
@@ -125,7 +128,7 @@ class _CoursesState extends State<Courses> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      //backgroundColor: Colors.black,
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.chevron_right,
@@ -144,17 +147,17 @@ class _CoursesState extends State<Courses> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.download_rounded),
-            label: 'Business',
+            label: 'Download',
             backgroundColor: Colors.green,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.open_in_browser),
-            label: 'School',
+            label: 'Browse',
             backgroundColor: Colors.purple,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
-            label: 'Settings',
+            label: 'Search',
             backgroundColor: Colors.pink,
           ),
         ],

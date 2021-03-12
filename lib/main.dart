@@ -3,6 +3,7 @@ import 'package:mobile_flutter/SignIn.dart';
 import 'package:mobile_flutter/Home.dart';
 import 'package:mobile_flutter/SignInList.dart';
 import 'package:mobile_flutter/Courses.dart';
+import 'package:mobile_flutter/allCourses.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -13,6 +14,7 @@ void main() {
       '/signIn':(context) => SignIn(),
       '/signInList':(context) => SignInList(),
       '/courses':(context) => Courses(),
+      '/allCourses':(context) => AllCourses(),
     },
   ));
 }

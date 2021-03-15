@@ -116,7 +116,7 @@ class _CoursesState extends State<Courses> {
       ),
       DownloadTab( courseData : courses),
       Text('Browse'),
-      Search(),
+      Search(courseData : courses),
     ];
 
   void onItemTap(int index){

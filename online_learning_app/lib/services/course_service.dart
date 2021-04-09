@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:online_learning_app/models/course.dart';
-import 'package:online_learning_app/models/courses.dart';
 
 class Course_Service{
   var client = http.Client();

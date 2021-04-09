@@ -16,14 +16,23 @@ class _CourseDetailState extends State<CourseDetail> {
     _courseDetail = Course_Service().getCourseDetail(widget.courseData['courseID'], widget.courseData['userID']);
     super.initState();
   }
-
+  
   @override
   Widget build(BuildContext context) {
+    
+    String getContentInArray(List<String>array){
+      String content = ' ';
+      for(int i = 0;i<array.length;i++ ){
+        print(array.length);
+        content += array[i];
+      }
+      return content;
+    }
+    
     return FutureBuilder(
       future: _courseDetail,
       builder:(context,snapshot){
         if(snapshot.hasData){
-          print(snapshot.data.title);
           return Scaffold(
             appBar: AppBar(
               title: Text('Course Detail',),
@@ -31,24 +40,28 @@ class _CourseDetailState extends State<CourseDetail> {
             bottomNavigationBar: BottomAppBar(
               child: Container(
                 height: 90.0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
                   children: [
                     Text(
-                        '\$${snapshot.data.price}',
+                      'Price: \$${snapshot.data.price}',
                       style: TextStyle(
                         fontSize: 25.0,
+                        color:Colors.lightBlue[700],
                       ),
                     ),
-                    Row(
-                      children: [
-                        RaisedButton(
-                            onPressed: (){
-
-                            },
-                            child: Text('Buy now'),
-                        )
-                      ],
+                    SizedBox(width: 15.0,),
+                    RaisedButton(
+                        onPressed: (){
+                        },
+                        color: Colors.lightBlue[600],
+                        padding: EdgeInsets.fromLTRB(35,15,35,15),
+                        child: Text(
+                            'Buy now',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                          ),
+                        ),
                     )
                   ],
                 ),
@@ -100,7 +113,89 @@ class _CourseDetailState extends State<CourseDetail> {
                   SizedBox(height: 10.0,),
                   Divider(height: 1.0,color: Colors.grey,),
                   SizedBox(height: 10.0,),
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.info),
+                            Text(
+                              'About this Course',
+                              style: TextStyle(
+                                fontSize: 23.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10.0,),
+                        Text(
+                            snapshot.data.description,
+                          style: TextStyle(
+                            fontSize: 17.0,
+                          ),
+                        ),
+                        SizedBox(height: 10.0,),
+                        Divider(height: 1.0,color: Colors.grey,),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.menu_book),
+                            Text(
+                              'What you learn',
+                              style: TextStyle(
+                                fontSize: 23.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10.0,),
+                        Text(
+                          getContentInArray(snapshot.data.learnWhat),
+                          style: TextStyle(
+                            fontSize: 17.0,
+                          ),
+                        ),
+                        SizedBox(height: 10.0,),
+                        Divider(height: 1.0,color: Colors.grey,),
+                      ],
+                    ),
+                  ),
 
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.local_fire_department_outlined),
+                            Text(
+                              'Requirements',
+                              style: TextStyle(
+                                fontSize: 23.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10.0,),
+                        Text(
+                          snapshot.data.description,
+                          style: TextStyle(
+                            fontSize: 17.0,
+                          ),
+                        ),
+                        SizedBox(height: 10.0,),
+                        Divider(height: 1.0,color: Colors.grey,),
+                      ],
+                    ),
+                  ),
+                  
                 ],
               ),
             ),

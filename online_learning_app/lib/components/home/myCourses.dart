@@ -16,29 +16,35 @@ class _MyCoursesState extends State<MyCourses> {
 
   @override
   Widget build(BuildContext context) {
-   // print(courseList[0].courseTitle);
     final UserProfile user = Provider.of<UserProfile>(context);
 
+    void deleteFavorite(String courseId) async {
+      await User_Service().likeCourse(courseId, user.token);
+      var res = await User_Service().getFavoriteCourses(user.token);
+      setState(() {
+        courseList = res;
+      });
+    }
     Widget getCourseList(List<FavoriteCourse> courseList){
       if(courseList != null && isFavoriteHit == true){
-        return Container(
-          color: Colors.grey[200],
-          height: 70.0,
-          child: ListView.builder(
-              itemCount: courseList.length,
-              itemBuilder: (context,index){
-                  print(courseList);
-                  return SmallCourseCard(
-                    courseData: courseList[index],
-                  );
-              }
+        return Expanded(
+          child: Container(
+            child: ListView.builder(
+                itemCount: courseList.length,
+                itemBuilder: (context,index){
+                    return SmallCourseCard(
+                      courseData: courseList[index],
+                      deleteFavorite: deleteFavorite,
+                    );
+                }
+            ),
           ),
         );
       }
       return Container();
     }
 
-    return ListView(
+    return Column(
       children:[
         FlatButton(
           color: Colors.grey[300],
@@ -60,7 +66,8 @@ class _MyCoursesState extends State<MyCourses> {
                 ),
               ),
               Expanded(child: Container()),
-              Icon(Icons.arrow_drop_down_sharp,size: 35.0,)
+              isFavoriteHit ? Icon(Icons.arrow_drop_down_sharp,size: 35.0,) :
+              Icon(Icons.arrow_right,size: 35.0,)
             ],
           ),
         ),

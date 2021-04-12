@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:online_learning_app/components/home/topCourses/courseCard.dart';
+import 'package:online_learning_app/sharedTemplate/courseCard.dart';
 import 'package:online_learning_app/services/course_service.dart';
 
 

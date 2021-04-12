@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:online_learning_app/models/course.dart';
-import 'package:online_learning_app/models/courses.dart';
+import 'package:online_learning_app/models/courseWithDetail.dart';
 
 class Course_Service{
   var client = http.Client();
@@ -118,6 +118,29 @@ class Course_Service{
     }
 
   }
+
+  Future getLessonInCourse(String courseId,String bearer) async {
+    Map<String, String> bearerHeader = {
+      'Authorization': 'Bearer $bearer'
+    };
+    try{
+      var res = await client.get(
+        'http://api.letstudy.org/course/detail-with-lesson/$courseId',
+        headers: bearerHeader,
+      );
+      var courseJson = json.decode(res.body);
+      print(res.statusCode);
+      if(res.statusCode == 200){
+        print(res.body);
+        var courseData = CourseWithDetail.fromJson(courseJson['payload']);
+        return courseData;
+      }
+      return null;
+  }catch(e){
+      print(e);
+      return null;
+    }
+    }
 
 // ____________________ END________________
 }

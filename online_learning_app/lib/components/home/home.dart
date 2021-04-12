@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_learning_app/components/home/myCourses.dart';
 import 'package:online_learning_app/components/home/topCourses.dart';
 import 'package:online_learning_app/notifier/userNotifier.dart';
 import 'package:provider/provider.dart';
@@ -16,10 +17,7 @@ class _HomeState extends State<Home> {
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
     TopCourses(),
-    Text(
-      'Index 1: My courses',
-      style: optionStyle,
-    ),
+    MyCourses(),
     Text(
       'Index 2: School',
       style: optionStyle,

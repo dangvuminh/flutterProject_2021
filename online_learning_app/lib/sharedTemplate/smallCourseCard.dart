@@ -34,7 +34,10 @@ class _SmallCourseCardState extends State<SmallCourseCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.courseData.courseTitle),
+                Container(
+                    width:250.0,
+                    child: Text(widget.courseData.courseTitle)
+                ),
                 Row(
                   children: [
                     Icon(Icons.person),

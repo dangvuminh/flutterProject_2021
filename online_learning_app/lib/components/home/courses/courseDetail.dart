@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:online_learning_app/models/userInfo.dart';
 import 'package:online_learning_app/services/course_service.dart';
+import 'package:online_learning_app/services/payment_service.dart';
 import 'package:online_learning_app/services/user_service.dart';
 import 'package:online_learning_app/video/VidController.dart';
+import 'package:provider/provider.dart';
 
 class CourseDetail extends StatefulWidget {
   final dynamic courseData;
@@ -29,6 +32,7 @@ class _CourseDetailState extends State<CourseDetail> {
 
   @override
   Widget build(BuildContext context) {
+
     String getContentInArray(List<String>array){
       String content = ' ';
       for(int i = 0;i<array.length;i++ ){
@@ -85,7 +89,9 @@ class _CourseDetailState extends State<CourseDetail> {
                     ),
                     SizedBox(width: 15.0,),
                     RaisedButton(
-                        onPressed: (){
+                        onPressed: () async {
+                            var res = Payment_Service().buyCourses(widget.courseData['token'], snapshot.data[0].id);
+                            print(res);
                         },
                         color: Colors.lightBlue[600],
                         padding: EdgeInsets.fromLTRB(35,15,35,15),

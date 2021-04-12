@@ -19,6 +19,7 @@ class CourseCard extends StatelessWidget {
             arguments: {
               'courseID': courseData.id,
               'userID': user.userInfo.id,
+              'token': user.token,
             }
         );
       },

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:online_learning_app/models/courseOwningState.dart';
 import 'package:online_learning_app/models/favoriteCourse.dart';
 import 'package:online_learning_app/models/ownCourse.dart';
 
@@ -116,6 +117,29 @@ class User_Service{
           courseData.add(course);
         }
         return courseData;
+      } else {
+        return null;
+      }
+    }catch(e){
+      print(e);
+      return null;
+    }
+  }
+
+  Future checkCourseOwningState(String courseId,String token) async {
+    Map<String, String> requestHeaders = {
+      'Authorization': 'Bearer $token',
+    };
+
+    try{
+      var res = await client.get(
+        'http://api.letstudy.org/user/check-own-course/$courseId',
+        headers: requestHeaders,
+      );
+
+      if(res.statusCode == 200){
+        var owningStateData = CourseOwningState.fromJson(json.decode(res.body));
+        return owningStateData;
       } else {
         return null;
       }

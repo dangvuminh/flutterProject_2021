@@ -17,6 +17,7 @@ class CourseDetail extends StatefulWidget {
 class _CourseDetailState extends State<CourseDetail> {
   Future<dynamic> _courseDetail;
   Future<dynamic> _likeStatus;
+  Future<dynamic> _owningState;
 
   bool isCourseLiked  ;
   bool isFirstHit = false; // to make sure initialize the favorite state only once
@@ -25,7 +26,7 @@ class _CourseDetailState extends State<CourseDetail> {
   void initState(){
     _courseDetail = Course_Service().getCourseDetail(widget.courseData['courseID'], widget.courseData['userID']);
    _likeStatus = User_Service().getLikeStatus(widget.courseData['courseID'], widget.courseData['token']);
-
+   _owningState = User_Service().checkCourseOwningState(widget.courseData['courseID'], widget.courseData['token']);
     super.initState();
   }
 
@@ -45,9 +46,11 @@ class _CourseDetailState extends State<CourseDetail> {
       future: Future.wait([
         _courseDetail,
         _likeStatus,
+        _owningState,
       ]),
       builder:(context, snapshot){
         if(snapshot.hasData){
+          print(snapshot.data[2].isUserOwnCourse);
           if(!isFirstHit){
             isCourseLiked = snapshot.data[1].likeStatus;
           }
@@ -81,7 +84,7 @@ class _CourseDetailState extends State<CourseDetail> {
                 child: Row(
                   children: [
                     Text(
-                      'Price: \$${snapshot.data[0].price}',
+                      'Price: ${snapshot.data[0].price}.vnd',
                       style: TextStyle(
                         fontSize: 25.0,
                         color:Colors.lightBlue[700],

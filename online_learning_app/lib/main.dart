@@ -19,10 +19,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         initialRoute: '/',
         onGenerateRoute: RouteGenerator.generateRoute,
-        // routes: {
-        //   '/': (context)=> Wrapper(),
-        //   '/courseDetail':(context) => CourseDetail(),
-        // },
+
       ),
     );
   }

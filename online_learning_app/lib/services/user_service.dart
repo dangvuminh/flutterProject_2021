@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:online_learning_app/models/courseOwningState.dart';
 import 'package:online_learning_app/models/favoriteCourse.dart';
+import 'package:online_learning_app/models/ownCourse.dart';
 
 class LikeStatus{
   bool likeStatus;
@@ -94,4 +96,57 @@ class User_Service{
       return null;
     }
   }
+
+
+  Future getOwnCourses(String token) async {
+    Map<String, String> requestHeaders = {
+      'Authorization': 'Bearer $token',
+    };
+
+    try{
+      var res = await client.get(
+        'http://api.letstudy.org/user/get-process-courses',
+        headers: requestHeaders,
+      );
+      var courseJson = json.decode(res.body);
+
+      if(res.statusCode == 200) {
+        List<OwnCourse> courseData = [];
+        for (int i = 0; i < courseJson['payload'].length; i++) {
+          var course = OwnCourse.fromJson(courseJson['payload'][i]);
+          courseData.add(course);
+        }
+        return courseData;
+      } else {
+        return null;
+      }
+    }catch(e){
+      print(e);
+      return null;
+    }
+  }
+
+  Future checkCourseOwningState(String courseId,String token) async {
+    Map<String, String> requestHeaders = {
+      'Authorization': 'Bearer $token',
+    };
+
+    try{
+      var res = await client.get(
+        'http://api.letstudy.org/user/check-own-course/$courseId',
+        headers: requestHeaders,
+      );
+
+      if(res.statusCode == 200){
+        var owningStateData = CourseOwningState.fromJson(json.decode(res.body));
+        return owningStateData;
+      } else {
+        return null;
+      }
+    }catch(e){
+      print(e);
+      return null;
+    }
+  }
+  //END_____________________
 }

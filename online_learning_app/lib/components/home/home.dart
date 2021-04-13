@@ -37,7 +37,6 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final UserNotifier userNoti = Provider.of<UserNotifier>(context);
-    //print(userNoti.userProfile.userInfo.email);
 
     return Scaffold(
       appBar: AppBar(

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:online_learning_app/models/userInfo.dart';
 import 'package:online_learning_app/services/course_service.dart';
+import 'package:online_learning_app/services/payment_service.dart';
 import 'package:online_learning_app/services/user_service.dart';
 import 'package:online_learning_app/video/VidController.dart';
+import 'package:provider/provider.dart';
 
 class CourseDetail extends StatefulWidget {
   final dynamic courseData;
@@ -14,6 +17,7 @@ class CourseDetail extends StatefulWidget {
 class _CourseDetailState extends State<CourseDetail> {
   Future<dynamic> _courseDetail;
   Future<dynamic> _likeStatus;
+  Future<dynamic> _owningState;
 
   bool isCourseLiked  ;
   bool isFirstHit = false; // to make sure initialize the favorite state only once
@@ -22,13 +26,14 @@ class _CourseDetailState extends State<CourseDetail> {
   void initState(){
     _courseDetail = Course_Service().getCourseDetail(widget.courseData['courseID'], widget.courseData['userID']);
    _likeStatus = User_Service().getLikeStatus(widget.courseData['courseID'], widget.courseData['token']);
-
+   _owningState = User_Service().checkCourseOwningState(widget.courseData['courseID'], widget.courseData['token']);
     super.initState();
   }
 
 
   @override
   Widget build(BuildContext context) {
+
     String getContentInArray(List<String>array){
       String content = ' ';
       for(int i = 0;i<array.length;i++ ){
@@ -41,9 +46,11 @@ class _CourseDetailState extends State<CourseDetail> {
       future: Future.wait([
         _courseDetail,
         _likeStatus,
+        _owningState,
       ]),
       builder:(context, snapshot){
         if(snapshot.hasData){
+          print(snapshot.data[2].isUserOwnCourse);
           if(!isFirstHit){
             isCourseLiked = snapshot.data[1].likeStatus;
           }
@@ -77,7 +84,7 @@ class _CourseDetailState extends State<CourseDetail> {
                 child: Row(
                   children: [
                     Text(
-                      'Price: \$${snapshot.data[0].price}',
+                      'Price: ${snapshot.data[0].price}.vnd',
                       style: TextStyle(
                         fontSize: 25.0,
                         color:Colors.lightBlue[700],
@@ -85,7 +92,9 @@ class _CourseDetailState extends State<CourseDetail> {
                     ),
                     SizedBox(width: 15.0,),
                     RaisedButton(
-                        onPressed: (){
+                        onPressed: () async {
+                            var res = Payment_Service().buyCourses(widget.courseData['token'], snapshot.data[0].id);
+                            print(res);
                         },
                         color: Colors.lightBlue[600],
                         padding: EdgeInsets.fromLTRB(35,15,35,15),

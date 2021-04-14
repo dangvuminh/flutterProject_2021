@@ -26,7 +26,7 @@ class _CourseDetailState extends State<CourseDetail> {
   void initState(){
     _courseDetail = Course_Service().getCourseDetail(widget.courseData['courseID'], widget.courseData['userID']);
    _likeStatus = User_Service().getLikeStatus(widget.courseData['courseID'], widget.courseData['token']);
-   _owningState = User_Service().checkCourseOwningState(widget.courseData['courseID'], widget.courseData['token']);
+   //_owningState = User_Service().checkCourseOwningState(widget.courseData['courseID'], widget.courseData['token']);
     super.initState();
   }
 
@@ -46,11 +46,11 @@ class _CourseDetailState extends State<CourseDetail> {
       future: Future.wait([
         _courseDetail,
         _likeStatus,
-        _owningState,
+       // _owningState,
       ]),
       builder:(context, snapshot){
         if(snapshot.hasData){
-          print(snapshot.data[2].isUserOwnCourse);
+          //print(snapshot.data[2].isUserOwnCourse);
           if(!isFirstHit){
             isCourseLiked = snapshot.data[1].likeStatus;
           }

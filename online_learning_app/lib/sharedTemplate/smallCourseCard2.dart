@@ -19,7 +19,7 @@ class _SmallCourseCard2State extends State<SmallCourseCard2> {
     return InkWell(
       onTap: (){
         Navigator.pushNamed(
-            context, '/courseDetail',
+            context, '/lessonList',
             arguments: {
               'courseID': widget.courseData.id,
               'userID': user.userInfo.id,

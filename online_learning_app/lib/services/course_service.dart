@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:online_learning_app/models/course.dart';
 import 'package:online_learning_app/models/courseWithDetail.dart';
+import 'package:online_learning_app/models/courseWithLessons.dart';
+
 
 class Course_Service{
   var client = http.Client();
@@ -129,10 +131,10 @@ class Course_Service{
         headers: bearerHeader,
       );
       var courseJson = json.decode(res.body);
-      print(res.statusCode);
       if(res.statusCode == 200){
-        print(res.body);
-        var courseData = CourseWithDetail.fromJson(courseJson['payload']);
+
+        var courseData = CourseWithLessons.fromJson(courseJson['payload']);
+        print(courseData);
         return courseData;
       }
       return null;

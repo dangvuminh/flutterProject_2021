@@ -86,7 +86,6 @@ class _MyCoursesState extends State<MyCourses> {
                     fontSize: 25.0
                 ),
               ),
-              Icon(Icons.favorite_border,color: Colors.pinkAccent,),
               Expanded(child: Container()),
               isFavoriteHit ? Icon(Icons.arrow_drop_down_sharp,size: 35.0,) :
               Icon(Icons.arrow_right,size: 35.0,)
@@ -114,7 +113,6 @@ class _MyCoursesState extends State<MyCourses> {
                     fontSize: 25.0
                 ),
               ),
-              Icon(Icons.my_library_books_outlined,color: Colors.green,),
               Expanded(child: Container()),
               isOwnHit ? Icon(Icons.arrow_drop_down_sharp,size: 35.0,) :
               Icon(Icons.arrow_right,size: 35.0,)

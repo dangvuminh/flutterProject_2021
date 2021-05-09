@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_learning_app/components/home/account/Account.dart';
 import 'package:online_learning_app/components/home/myCourses.dart';
 import 'package:online_learning_app/components/home/topCourses.dart';
 import 'package:online_learning_app/notifier/userNotifier.dart';
@@ -13,6 +14,7 @@ class _HomeState extends State<Home> {
 
   //Nav bottom bar function
   int _selectedIndex = 0;
+  String appBarName;
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
@@ -22,15 +24,19 @@ class _HomeState extends State<Home> {
       'Index 2: School',
       style: optionStyle,
     ),
-    Text(
-      'Index 3: Account',
-      style: optionStyle,
-    ),
+   Account(),
   ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+      if(index == 0)
+        appBarName = 'Home';
+      if(index == 1)
+        appBarName = 'My Courses';
+      if(index == 3)
+        appBarName = 'Account Settings';
+       
     });
   }
 
@@ -41,9 +47,9 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 130.0,
-        title: Text('Home'),
+        title: Text(appBarName),
         bottom: PreferredSize(
-          child: Container(
+          child:Container(
             padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 15.0),
             child: Row(
               children: [

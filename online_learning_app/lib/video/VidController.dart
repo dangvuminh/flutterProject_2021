@@ -50,9 +50,9 @@ class _VidControllerState extends State<VidController> {
                   },
                   icon: Icon(
                       _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-                       color: Colors.white,
+                       color: Colors.black,
                   ),
-                  label: Text('Click me bae'))
+                  label: Text('Play Video'))
             ],
           );
         } else {

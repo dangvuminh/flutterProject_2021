@@ -18,8 +18,7 @@ class MyApp extends StatelessWidget {
       create:(context) => UserNotifier() ,
       child: MaterialApp(
         initialRoute: '/',
-        onGenerateRoute: RouteGenerator.generateRoute,
-
+        onGenerateRoute:  RouteGenerator.generateRoute,
       ),
     );
   }

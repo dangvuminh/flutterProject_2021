@@ -19,7 +19,7 @@ class _SmallCourseCard2State extends State<SmallCourseCard2> {
     return InkWell(
       onTap: (){
         Navigator.pushNamed(
-            context, '/lessonList',
+            context, '/sectionList',
             arguments: {
               'courseID': widget.courseData.id,
               'userID': user.userInfo.id,
@@ -41,6 +41,7 @@ class _SmallCourseCard2State extends State<SmallCourseCard2> {
                   )
               ),
               Container(
+                padding: EdgeInsets.only(left:10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

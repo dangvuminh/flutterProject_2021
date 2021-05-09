@@ -42,6 +42,7 @@ class _SmallCourseCardState extends State<SmallCourseCard> {
                 )
             ),
             Container(
+              padding: EdgeInsets.only(left:10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

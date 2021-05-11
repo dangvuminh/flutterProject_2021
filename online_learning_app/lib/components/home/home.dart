@@ -14,7 +14,7 @@ class _HomeState extends State<Home> {
 
   //Nav bottom bar function
   int _selectedIndex = 0;
-  String appBarName;
+  String appBarName="Home";
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
@@ -30,13 +30,16 @@ class _HomeState extends State<Home> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+
       if(index == 0)
         appBarName = 'Home';
       if(index == 1)
         appBarName = 'My Courses';
+      if(index == 2)
+        appBarName = 'NULL';
       if(index == 3)
         appBarName = 'Account Settings';
-       
+
     });
   }
 
@@ -46,40 +49,8 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 130.0,
+        //toolbarHeight: 130.0,
         title: Text(appBarName),
-        bottom: PreferredSize(
-          child:Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 15.0),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.person,
-                ),
-                SizedBox(width: 10.0,),
-                Column(
-                  children: [
-                    Text('${userNoti.userProfile.userInfo.name}'),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(width: 1.0,color: Colors.white),
-                        borderRadius:BorderRadius.circular(20.0),
-                      ),
-                      child: Text(
-                          '${userNoti.userProfile.userInfo.email}',
-                           style: TextStyle(
-
-                           ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
         actions: [
           FlatButton.icon(
               onPressed: (){

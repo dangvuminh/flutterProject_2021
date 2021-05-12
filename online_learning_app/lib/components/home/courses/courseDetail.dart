@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:online_learning_app/models/userInfo.dart';
 import 'package:online_learning_app/services/course_service.dart';
 import 'package:online_learning_app/services/payment_service.dart';
 import 'package:online_learning_app/services/user_service.dart';
-import 'package:online_learning_app/video/VidController.dart';
-import 'package:provider/provider.dart';
 
 class CourseDetail extends StatefulWidget {
   final dynamic courseData;
@@ -26,7 +23,7 @@ class _CourseDetailState extends State<CourseDetail> {
   void initState(){
     _courseDetail = Course_Service().getCourseDetail(widget.courseData['courseID'], widget.courseData['userID']);
    _likeStatus = User_Service().getLikeStatus(widget.courseData['courseID'], widget.courseData['token']);
-   _owningState = User_Service().checkCourseOwningState(widget.courseData['courseID'], widget.courseData['token']);
+   //_owningState = User_Service().checkCourseOwningState(widget.courseData['courseID'], widget.courseData['token']);
     super.initState();
   }
 
@@ -46,11 +43,10 @@ class _CourseDetailState extends State<CourseDetail> {
       future: Future.wait([
         _courseDetail,
         _likeStatus,
-        _owningState,
+       // _owningState,
       ]),
       builder:(context, snapshot){
         if(snapshot.hasData){
-          print(snapshot.data[2].isUserOwnCourse);
           if(!isFirstHit){
             isCourseLiked = snapshot.data[1].likeStatus;
           }
@@ -113,9 +109,6 @@ class _CourseDetailState extends State<CourseDetail> {
             body: ListView(
               children: [
                 Image(image: NetworkImage(snapshot.data[0].imageUrl)),
-                // VidController(
-                //   vidUrl: snapshot.data.promoVidUrl,
-                // ),
                 Text(
                     snapshot.data[0].title,
                     style: TextStyle(

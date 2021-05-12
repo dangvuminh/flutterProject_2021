@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:online_learning_app/components/home/courses/courseDetail.dart';
-import 'package:online_learning_app/components/home/home.dart';
+import 'package:online_learning_app/components/home/lessons/lessonDetail.dart';
+import 'package:online_learning_app/components/home/lessons/lessonList.dart';
+import 'package:online_learning_app/components/home/lessons/sectionList.dart';
 import 'package:online_learning_app/components/wrapper.dart';
 
 class RouteGenerator{
@@ -16,6 +18,31 @@ class RouteGenerator{
               courseData : args,
             )
         );
+
+      case '/sectionList': {
+        return MaterialPageRoute(
+            builder: (context)=> SectionList(
+              courseData: args,
+            )
+        );
+      }
+      case '/lessonList': {
+        return MaterialPageRoute(
+            builder: (context)=> LessonList(
+              lessons: args,
+            )
+        );
+
+      }
+
+      case '/lessonDetail': {
+        return MaterialPageRoute(
+            builder: (context)=> LessonDetail(
+              lesson: args,
+            )
+        );
+
+      }
     }
   }
 }

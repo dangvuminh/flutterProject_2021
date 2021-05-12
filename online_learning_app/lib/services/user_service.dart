@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:online_learning_app/models/courseOwningState.dart';
 import 'package:online_learning_app/models/favoriteCourse.dart';
 import 'package:online_learning_app/models/ownCourse.dart';
+import 'package:online_learning_app/models/userInfo.dart';
 
 class LikeStatus{
   bool likeStatus;
@@ -144,6 +145,60 @@ class User_Service{
         return null;
       }
     }catch(e){
+      print(e);
+      return null;
+    }
+  }
+
+  Future getUserInfo(String token) async {
+    Map<String, String> requestHeaders = {
+      'Authorization': 'Bearer $token',
+    };
+
+    try{
+      var res = await client.get(
+        'http://api.letstudy.org/user/me',
+        headers: requestHeaders,
+      );
+
+      if(res.statusCode == 200){
+        var jsonData = json.decode(res.body);
+        var userInfo = UserInfo.fromJson(jsonData['payload']);
+        return userInfo;
+      } else {
+        return null;
+      }
+    }catch(e){
+      print(e);
+      return null;
+    }
+
+  }
+
+  Future updateProfile(String name,String avatar,String phone ,String token) async {
+    Map<String, String> requestHeaders = {
+      'Authorization': 'Bearer $token',
+    };
+    Map<String, String> data = {
+      'name': '$name',
+      'avatar': '$avatar',
+      'phone': '$phone'
+    };
+    try {
+      var res = await client.put(
+        'http://api.letstudy.org/user/update-profile',
+        body: data,
+        headers: requestHeaders,
+      );
+
+      if (res.statusCode == 200) {
+        var jsonData = json.decode(res.body);
+        var userInfo = UserInfo.fromJson(jsonData['payload']);
+        return userInfo;
+      } else {
+        return null;
+      }
+    } catch (e) {
       print(e);
       return null;
     }

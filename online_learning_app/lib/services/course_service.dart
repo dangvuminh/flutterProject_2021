@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:online_learning_app/models/course.dart';
-import 'package:online_learning_app/models/courseWithDetail.dart';
+import 'package:online_learning_app/models/courseWithLessons.dart';
+
 
 class Course_Service{
   var client = http.Client();
@@ -119,7 +120,7 @@ class Course_Service{
 
   }
 
-  Future getLessonInCourse(String courseId,String bearer) async {
+  Future getSectionInCourse(String courseId,String bearer) async {
     Map<String, String> bearerHeader = {
       'Authorization': 'Bearer $bearer'
     };
@@ -129,10 +130,8 @@ class Course_Service{
         headers: bearerHeader,
       );
       var courseJson = json.decode(res.body);
-      print(res.statusCode);
       if(res.statusCode == 200){
-        print(res.body);
-        var courseData = CourseWithDetail.fromJson(courseJson['payload']);
+        var courseData = CourseWithLessons.fromJson(courseJson['payload']);
         return courseData;
       }
       return null;

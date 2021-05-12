@@ -10,8 +10,14 @@ class ProfileUpdate extends StatefulWidget {
 
 class _ProfileUpdateState extends State<ProfileUpdate> {
 
-  String name;
-  String phone;
+  String name ;
+  String phone ;
+  @override
+  void initState() {
+    name = widget.userInfo['name'];
+    phone = widget.userInfo['phone'];
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +36,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                       name = val;
                     });
                   },
-                  initialValue: widget.userInfo['name'],
+                  initialValue: name,
                   decoration: InputDecoration(
                     hintText: 'Name'
                   ),
@@ -41,7 +47,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                   phone = val;
                 });
               },
-              initialValue: widget.userInfo['phone'] ,
+              initialValue: phone ,
             decoration: InputDecoration(
                 hintText: 'Phone'
             ),

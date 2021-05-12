@@ -21,8 +21,8 @@ class _AccountState extends State<Account> {
 
   @override
   void initState() {
-    _userInfo = User_Service().getUserInfo(widget.token);
     super.initState();
+    _userInfo =  User_Service().getUserInfo(widget.token);
   }
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class _AccountState extends State<Account> {
                         onPressed: () async {
                            await getImage();
                            var userdata = await User_Service().getUserInfo(user.userProfile.token);
-                           var newUserInfo = await User_Service().updateProfile(userdata.name, imagePath, userdata.phone, widget.token);
+                           await User_Service().updateProfile(userdata.name, imagePath, userdata.phone, widget.token);
                         },
                     ),
 
@@ -133,8 +133,8 @@ class _AccountState extends State<Account> {
                                 )
                               ],
                             ),
-                            user.userProfile.userInfo.name != 'null'
-                                ? Text(user.userProfile.userInfo.name,style: TextStyle(fontSize: 20.0),)
+                            snapshot.data.name != 'null'
+                                ? Text(snapshot.data.name,style: TextStyle(fontSize: 20.0),)
                                 : Text('Anonymous',style: TextStyle(fontSize: 20.0)),
                           ],
                         ),
@@ -158,7 +158,7 @@ class _AccountState extends State<Account> {
                               arguments: {
                                    'name': snapshot.data.name == 'null' ? 'no data' : snapshot.data.name,
                                    'phone': snapshot.data.phone == 'null' ? 'no data' : snapshot.data.phone,
-                                   'avatar': snapshot.data.avatar == 'null' ? 'no data' : imagePath,
+                                   'avatar': snapshot.data.avatar == 'null' ? 'no data' : snapshot.data.avatar,
                                    'token' : widget.token,
                               }
                             );

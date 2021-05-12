@@ -15,17 +15,7 @@ class _HomeState extends State<Home> {
   //Nav bottom bar function
   int _selectedIndex = 0;
   String appBarName="Home";
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static List<Widget> _widgetOptions = <Widget>[
-    TopCourses(),
-    MyCourses(),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-   Account(),
-  ];
+
 
   void _onItemTapped(int index) {
     setState(() {
@@ -46,7 +36,19 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final UserNotifier userNoti = Provider.of<UserNotifier>(context);
-
+    const TextStyle optionStyle =
+    TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+     List<Widget> _widgetOptions = <Widget>[
+      TopCourses(),
+      MyCourses(),
+      Text(
+        'Index 2: School',
+        style: optionStyle,
+      ),
+      Account(
+        token : userNoti.userProfile.token
+      ),
+    ];
     return Scaffold(
       appBar: AppBar(
         //toolbarHeight: 130.0,

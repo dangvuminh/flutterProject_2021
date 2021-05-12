@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:online_learning_app/components/home/account/profileUpdate.dart';
 import 'package:online_learning_app/components/home/courses/courseDetail.dart';
 import 'package:online_learning_app/components/home/lessons/lessonDetail.dart';
 import 'package:online_learning_app/components/home/lessons/lessonList.dart';
@@ -41,7 +42,13 @@ class RouteGenerator{
               lesson: args,
             )
         );
-
+      }
+      case '/profileUpdate':{
+        return MaterialPageRoute(
+            builder: (context)=> ProfileUpdate(
+              userInfo: args,
+            )
+        );
       }
     }
   }

@@ -1,28 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:online_learning_app/services/user_service.dart';
 
 class ProfileUpdate extends StatefulWidget {
+  dynamic userInfo;
+  ProfileUpdate({@required this.userInfo});
   @override
   _ProfileUpdateState createState() => _ProfileUpdateState();
 }
 
 class _ProfileUpdateState extends State<ProfileUpdate> {
+
+  String name;
+  String phone;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Form(
-        child: Column(
-          children: [
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Update Form'),
+      ),
+      body: Container(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Form(
+            child: Column(
+              children: [
+                TextFormField(
+                  onChanged: (val){
+                    setState(() {
+                      name = val;
+                    });
+                  },
+                  initialValue: widget.userInfo['name'],
+                  decoration: InputDecoration(
+                    hintText: 'Name'
+                  ),
+                ),
             TextFormField(
-              decoration: InputDecoration(
-                hintText: 'Name'
-              ),
+              onChanged: (val){
+                setState(() {
+                  phone = val;
+                });
+              },
+              initialValue: widget.userInfo['phone'] ,
+            decoration: InputDecoration(
+                hintText: 'Phone'
             ),
-        TextFormField(
-        decoration: InputDecoration(
-            hintText: 'Phone'
-        ),
-        ),
-          ],
+            ),
+             RaisedButton(
+                 child: Text('Update'),
+                 onPressed: () async {
+                    await User_Service().updateProfile(name, widget.userInfo['avatar'], phone, widget.userInfo['token']);
+                    Navigator.pop(context);
+                 }
+                 )
+              ],
+            ),
+          ),
         ),
       ),
     );

@@ -13,7 +13,6 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  String trial = 'user/macbook/stackoverflow.com/questions/52975739/dart-flutter-validating-a-string-for-url';
   File _image;
   String imagePath;
   final picker = ImagePicker();
@@ -91,7 +90,7 @@ class _AccountState extends State<Account> {
       if(snapshot.hasData){
         var urlPattern = r"(https?|http)://([-A-Z0-9.]+)(/[-A-Z0-9+&@#/%=~_|!:,.;]*)?(\?[A-Z0-9+&@#/%=~_|!:‌​,.;]*)?";
         var isUrl = new RegExp(urlPattern, caseSensitive: false).firstMatch(snapshot.data.avatar);
-        
+
         if( isUrl == null && isFirstHit == false){
           _image = File(snapshot.data.avatar);
         }
@@ -134,7 +133,7 @@ class _AccountState extends State<Account> {
                                 )
                               ],
                             ),
-                            user.userProfile.userInfo.name != null
+                            user.userProfile.userInfo.name != 'null'
                                 ? Text(user.userProfile.userInfo.name,style: TextStyle(fontSize: 20.0),)
                                 : Text('Anonymous',style: TextStyle(fontSize: 20.0)),
                           ],
@@ -150,12 +149,27 @@ class _AccountState extends State<Account> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.settings),
-                            SizedBox(width:10.0),
-                            Text('Update profile')
-                          ],
+                        child: InkWell(
+                          onTap: (){
+                            print(snapshot.data.name);
+                            Navigator.pushNamed(
+                                 context,
+                                '/profileUpdate',
+                              arguments: {
+                                   'name': snapshot.data.name == 'null' ? 'no data' : snapshot.data.name,
+                                   'phone': snapshot.data.phone == 'null' ? 'no data' : snapshot.data.phone,
+                                   'avatar': snapshot.data.avatar == 'null' ? 'no data' : imagePath,
+                                   'token' : widget.token,
+                              }
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              Icon(Icons.settings),
+                              SizedBox(width:10.0),
+                              Text('Update profile')
+                            ],
+                          ),
                         ),
                       ),
                       Divider(height: 1.0,color: Colors.grey[400],),

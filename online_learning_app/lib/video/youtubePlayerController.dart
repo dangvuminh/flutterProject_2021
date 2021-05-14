@@ -7,11 +7,10 @@ class YoutubePlayerController extends StatefulWidget {
 }
 
 class _YoutubePlayerControllerState extends State<YoutubePlayerController> {
-  YoutubePlayerController _controller;
+  YoutubePlayerController _controller; 
   void runYoutubeVideo(){
-    _controller = YoutubePlayerController(
-      //initialVideoId: ""
-    );
+    _controller = YoutubePlayerController();
+
   }
   @override
   Widget build(BuildContext context) {

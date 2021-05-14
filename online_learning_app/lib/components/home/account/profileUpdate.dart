@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:online_learning_app/services/user_service.dart';
 
 class ProfileUpdate extends StatefulWidget {
-  dynamic userInfo;
+  final dynamic userInfo;
   ProfileUpdate({@required this.userInfo});
   @override
   _ProfileUpdateState createState() => _ProfileUpdateState();
@@ -22,6 +22,14 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            //When you change or not change anything on the text field then you click Back Button on appbar
+            // return the name of current user when not updating
+            Navigator.pop(context,widget.userInfo['name']);
+          },
+        ),
         title: Text('Update Form'),
       ),
       body: Container(
@@ -30,6 +38,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
           child: Form(
             child: Column(
               children: [
+                Text('Name:'),
                 TextFormField(
                   onChanged: (val){
                     setState(() {
@@ -41,7 +50,9 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                     hintText: 'Name'
                   ),
                 ),
-            TextFormField(
+                SizedBox(height: 30.0,),
+                Text('Phone:'),
+                TextFormField(
               onChanged: (val){
                 setState(() {
                   phone = val;
@@ -56,7 +67,7 @@ class _ProfileUpdateState extends State<ProfileUpdate> {
                  child: Text('Update'),
                  onPressed: () async {
                     await User_Service().updateProfile(name, widget.userInfo['avatar'], phone, widget.userInfo['token']);
-                    Navigator.pop(context);
+                    Navigator.pop(context,name);
                  }
                  )
               ],

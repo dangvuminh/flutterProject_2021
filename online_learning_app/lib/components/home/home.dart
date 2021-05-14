@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:online_learning_app/components/home/account/Account.dart';
 import 'package:online_learning_app/components/home/myCourses.dart';
+import 'package:online_learning_app/components/home/search.dart';
 import 'package:online_learning_app/components/home/topCourses.dart';
 import 'package:online_learning_app/notifier/userNotifier.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +27,7 @@ class _HomeState extends State<Home> {
       if(index == 1)
         appBarName = 'My Courses';
       if(index == 2)
-        appBarName = 'NULL';
+        appBarName = 'Search';
       if(index == 3)
         appBarName = 'Account Settings';
 
@@ -41,10 +42,7 @@ class _HomeState extends State<Home> {
      List<Widget> _widgetOptions = <Widget>[
       TopCourses(),
       MyCourses(),
-      Text(
-        'Index 2: School',
-        style: optionStyle,
-      ),
+      Search(),
       Account(
         token : userNoti.userProfile.token
       ),
@@ -77,8 +75,8 @@ class _HomeState extends State<Home> {
             backgroundColor: Colors.lightBlue,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
+            icon: Icon(Icons.search),
+            label: 'Search',
             backgroundColor: Colors.cyanAccent,
           ),
           BottomNavigationBarItem(

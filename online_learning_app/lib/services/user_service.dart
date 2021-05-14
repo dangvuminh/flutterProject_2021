@@ -203,5 +203,58 @@ class User_Service{
       return null;
     }
   }
+
+  Future changPassword(String id,String oldPassword,String newPassword,String token) async {
+    Map<String, String> requestHeaders = {
+      'Authorization': 'Bearer $token',
+    };
+    Map<String, String> data = {
+      'id': '$id',
+      'oldPass': '$oldPassword',
+      'newPass': '$newPassword',
+    };
+    try {
+      var res = await client.post(
+        'http://api.letstudy.org/user/change-password',
+        body: data,
+        headers: requestHeaders,
+      );
+
+      if (res.statusCode == 200) {
+        return 1;
+      } else {
+        return 0;
+      }
+    } catch (e) {
+      print(e);
+      return 0;
+    }
+  }
+
+  Future changeEmail(String email,String token) async {
+    Map<String, String> requestHeaders = {
+      'Authorization': 'Bearer $token',
+    };
+    Map<String, String> data = {
+      'newEmail': '$email',
+    };
+    try {
+      var res = await client.put(
+        'http://api.letstudy.org/user/change-user-email',
+        body: data,
+        headers: requestHeaders,
+      );
+
+      if (res.statusCode == 200) {
+        return 1;
+      } else {
+        return 0;
+      }
+    } catch (e) {
+      print(e);
+      return 0;
+    }
+  }
+
   //END_____________________
 }

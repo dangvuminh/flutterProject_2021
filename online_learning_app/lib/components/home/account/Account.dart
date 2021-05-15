@@ -13,22 +13,50 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  String trial = 'user/macbook/stackoverflow.com/questions/52975739/dart-flutter-validating-a-string-for-url';
-  File _image;
+  File _image ;
   String imagePath;
   final picker = ImagePicker();
   bool isFirstHit = false;
   Future<dynamic> _userInfo;
-
+  String name='anonymous';
   @override
   void initState() {
-    _userInfo = User_Service().getUserInfo(widget.token);
     super.initState();
+    _userInfo =  User_Service().getUserInfo(widget.token);
   }
   @override
   Widget build(BuildContext context) {
     final UserNotifier user = Provider.of<UserNotifier>(context);
 
+    Future<void> _showMyDialog(String type) async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Congrats!!'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  type == 'password' 
+                      ? Text('You have changed your password successfully..') 
+                      :Text('You have changed your email successfully..'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+    
     Future getImage() async {
       final pickedFile = await picker.getImage(source: ImageSource.gallery);
       setState(() {
@@ -60,7 +88,7 @@ class _AccountState extends State<Account> {
                         onPressed: () async {
                            await getImage();
                            var userdata = await User_Service().getUserInfo(user.userProfile.token);
-                           var newUserInfo = await User_Service().updateProfile(userdata.name, imagePath, userdata.phone, widget.token);
+                           await User_Service().updateProfile(userdata.name, imagePath, userdata.phone, widget.token);
                         },
                     ),
 
@@ -91,7 +119,10 @@ class _AccountState extends State<Account> {
       if(snapshot.hasData){
         var urlPattern = r"(https?|http)://([-A-Z0-9.]+)(/[-A-Z0-9+&@#/%=~_|!:,.;]*)?(\?[A-Z0-9+&@#/%=~_|!:‌​,.;]*)?";
         var isUrl = new RegExp(urlPattern, caseSensitive: false).firstMatch(snapshot.data.avatar);
-        
+
+        if(isFirstHit  ==  false)
+        name = snapshot.data.name;
+
         if( isUrl == null && isFirstHit == false){
           _image = File(snapshot.data.avatar);
         }
@@ -134,8 +165,8 @@ class _AccountState extends State<Account> {
                                 )
                               ],
                             ),
-                            user.userProfile.userInfo.name != null
-                                ? Text(user.userProfile.userInfo.name,style: TextStyle(fontSize: 20.0),)
+                                 name != null
+                                ? Text(name,style: TextStyle(fontSize: 20.0),)
                                 : Text('Anonymous',style: TextStyle(fontSize: 20.0)),
                           ],
                         ),
@@ -150,23 +181,57 @@ class _AccountState extends State<Account> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.settings),
-                            SizedBox(width:10.0),
-                            Text('Update profile')
-                          ],
+                        child: InkWell(
+                          onTap: (){
+                            print(snapshot.data.name);
+                            Navigator.pushNamed(
+                                 context,
+                                '/profileUpdate',
+                              arguments: {
+                                   'name': name == 'null' ? 'no data' : name,
+                                   'phone': snapshot.data.phone == 'null' ? 'no data' : snapshot.data.phone,
+                                   'avatar': snapshot.data.avatar == 'null' ? 'no data' : snapshot.data.avatar,
+                                   'token' : widget.token,
+                              }
+                            ).then((value) {
+                              setState(() {
+                                name = value;
+                                isFirstHit = true;
+                              });
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Icon(Icons.settings),
+                              SizedBox(width:10.0),
+                              Text('Update profile')
+                            ],
+                          ),
                         ),
                       ),
                       Divider(height: 1.0,color: Colors.grey[400],),
                       Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.lock),
-                            SizedBox(width:10.0),
-                            Text('Change password'),
-                          ],
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.pushNamed(
+                                context, '/changePassword',
+                                arguments: {
+                                  'id': user.userProfile.userInfo.id,
+                                  'token': user.userProfile.token
+                                }
+                            ).then((value) {
+                              if(value == true)
+                                _showMyDialog('password');
+                            }) ;
+                          },
+                          child: Row(
+                            children: [
+                              Icon(Icons.lock),
+                              SizedBox(width:10.0),
+                              Text('Change password'),
+                            ],
+                          ),
                         ),
                       ),
 
@@ -185,12 +250,25 @@ class _AccountState extends State<Account> {
                       Divider(height: 1.0,color: Colors.grey[400],),
                       Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.email_outlined),
-                            SizedBox(width:10.0),
-                            Text('Change email'),
-                          ],
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.pushNamed(
+                              context, '/changeEmail',
+                              arguments: {
+                                'token': widget.token
+                              }
+                            ).then((value) {
+                              if(value == true)
+                                _showMyDialog('email');
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Icon(Icons.email_outlined),
+                              SizedBox(width:10.0),
+                              Text('Change email'),
+                            ],
+                          ),
                         ),
                       ),
                     ],

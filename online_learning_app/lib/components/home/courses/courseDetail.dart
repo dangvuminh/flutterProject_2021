@@ -23,14 +23,13 @@ class _CourseDetailState extends State<CourseDetail> {
   void initState(){
     _courseDetail = Course_Service().getCourseDetail(widget.courseData['courseID'], widget.courseData['userID']);
    _likeStatus = User_Service().getLikeStatus(widget.courseData['courseID'], widget.courseData['token']);
-   //_owningState = User_Service().checkCourseOwningState(widget.courseData['courseID'], widget.courseData['token']);
+   _owningState = User_Service().checkCourseOwningState(widget.courseData['courseID'], widget.courseData['token']);
     super.initState();
   }
 
 
   @override
   Widget build(BuildContext context) {
-
     String getContentInArray(List<String>array){
       String content = ' ';
       for(int i = 0;i<array.length;i++ ){
@@ -43,7 +42,7 @@ class _CourseDetailState extends State<CourseDetail> {
       future: Future.wait([
         _courseDetail,
         _likeStatus,
-       // _owningState,
+        _owningState,
       ]),
       builder:(context, snapshot){
         if(snapshot.hasData){
@@ -77,7 +76,8 @@ class _CourseDetailState extends State<CourseDetail> {
               child: Container(
 
                 height: 90.0,
-                child: Row(
+                child: snapshot.data[2].isUserOwnCourse == false
+                    ? Row(
                   children: [
                     Text(
                       'Price: ${snapshot.data[0].price}.vnd',
@@ -87,7 +87,7 @@ class _CourseDetailState extends State<CourseDetail> {
                       ),
                     ),
                     SizedBox(width: 15.0,),
-                    RaisedButton(
+                         RaisedButton(
                         onPressed: () async {
                             var res = Payment_Service().buyCourses(widget.courseData['token'], snapshot.data[0].id);
                             print(res);
@@ -102,6 +102,32 @@ class _CourseDetailState extends State<CourseDetail> {
                           ),
                         ),
                     )
+                  ],
+                )
+                    : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RaisedButton(
+                      onPressed: (){
+                        Navigator.pushNamed(
+                            context, '/sectionList',
+                            arguments: {
+                              'courseID': widget.courseData['courseID'],
+                              'userID': widget.courseData['userID'],
+                              'token': widget.courseData['token'],
+                            }
+                        );
+                      },
+                      color: Colors.lightGreen[600],
+                      padding: EdgeInsets.fromLTRB(35,15,35,15),
+                      child: Text(
+                        'Start the course',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -239,7 +265,11 @@ class _CourseDetailState extends State<CourseDetail> {
             );
         }
 
-        return CircularProgressIndicator();
+        return Scaffold(
+            appBar: AppBar(
+              title: Text('Loading...'),
+            ),
+            body: Center(child: CircularProgressIndicator()));
       }
     );
   }

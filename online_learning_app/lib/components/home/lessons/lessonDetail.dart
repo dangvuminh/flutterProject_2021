@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:online_learning_app/services/lesson_service.dart';
 import 'package:online_learning_app/services/video_service.dart';
+import 'package:online_learning_app/video/youtubeVideo.dart';
 
 class LessonDetail extends StatefulWidget {
   final dynamic lesson;
@@ -15,11 +16,10 @@ class _LessonDetailState extends State<LessonDetail> {
   Future<dynamic> _video;
   @override
   void initState(){
-    //
     _lessonDetail = Lesson_Service().getLessonDetail(widget.lesson['courseID'],
         widget.lesson['lessonID'],widget.lesson['token']);
-    //_video = Video_Service().getLessonVideo(widget.lesson['courseID'],
-       // widget.lesson['lessonID'],widget.lesson['token']);
+    _video = Video_Service().getLessonVideo(widget.lesson['courseID'],
+        widget.lesson['lessonID'],widget.lesson['token']);
 
     super.initState();
   }
@@ -33,9 +33,12 @@ class _LessonDetailState extends State<LessonDetail> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             InkWell(
-              onTap: (){
+              onTap: () {
                 setState(() {
-                  _lessonDetail = Lesson_Service().getLessonDetail(widget.lesson['courseID'], nextLesson, widget.lesson['token']);
+                  _lessonDetail =  Lesson_Service().getLessonDetail(widget.lesson['courseID'],
+                      nextLesson, widget.lesson['token']);
+                  _video =  Video_Service().getLessonVideo(widget.lesson['courseID'],
+                      nextLesson,widget.lesson['token']);
                 });
               },
               child: Container(
@@ -59,7 +62,10 @@ class _LessonDetailState extends State<LessonDetail> {
             InkWell(
               onTap: (){
                 setState(() {
-                  _lessonDetail = Lesson_Service().getLessonDetail(widget.lesson['courseID'], prevLesson, widget.lesson['token']);
+                  _lessonDetail = Lesson_Service().getLessonDetail(widget.lesson['courseID'],
+                      prevLesson, widget.lesson['token']);
+                  _video = Video_Service().getLessonVideo(widget.lesson['courseID'],
+                      prevLesson,widget.lesson['token']);
                 });
               },
               child: Container(
@@ -84,7 +90,10 @@ class _LessonDetailState extends State<LessonDetail> {
             InkWell(
               onTap: (){
                 setState(() {
-                  _lessonDetail = Lesson_Service().getLessonDetail(widget.lesson['courseID'], prevLesson, widget.lesson['token']);
+                  _lessonDetail = Lesson_Service().getLessonDetail(widget.lesson['courseID'],
+                      prevLesson, widget.lesson['token']);
+                  _video = Video_Service().getLessonVideo(widget.lesson['courseID'],
+                      prevLesson,widget.lesson['token']);
                 });
               },
               child: Container(
@@ -104,7 +113,10 @@ class _LessonDetailState extends State<LessonDetail> {
             InkWell(
               onTap: (){
                 setState(() {
-                  _lessonDetail = Lesson_Service().getLessonDetail(widget.lesson['courseID'], nextLesson, widget.lesson['token']);
+                  _lessonDetail = Lesson_Service().getLessonDetail(widget.lesson['courseID'],
+                      nextLesson, widget.lesson['token']);
+                  _video = Video_Service().getLessonVideo(widget.lesson['courseID'],
+                      nextLesson,widget.lesson['token']);
                 });
               },
               child: Container(
@@ -145,6 +157,7 @@ class _LessonDetailState extends State<LessonDetail> {
                           fontSize: 30.0,
                         ),
                     ),
+                    YoutubeVideo(vidUrl:snapshot.data[1].videoUrl),
                     Text(snapshot.data[0].content),
 
                     followingLesson(snapshot.data[0].prevLessonId,snapshot.data[0].nextLessonId),

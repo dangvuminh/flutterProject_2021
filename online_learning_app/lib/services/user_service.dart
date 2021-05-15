@@ -139,7 +139,8 @@ class User_Service{
       );
 
       if(res.statusCode == 200){
-        var owningStateData = CourseOwningState.fromJson(json.decode(res.body));
+        var jsonData = json.decode(res.body);
+        var owningStateData = CourseOwningState.fromJson(jsonData['payload']);
         return owningStateData;
       } else {
         return null;

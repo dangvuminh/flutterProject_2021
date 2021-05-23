@@ -118,15 +118,8 @@ class _RegisterState extends State<Register> {
                           });
                         } else {
                           print('Successfully Signing up');
-                          //User user = User(username: 'dang',email: 'dang',phone: '12134',password: 'dang');
-                          //userNoti.getUser(res);
-                          // dynamic res2 = await _auth.sendActivateEmail(email);
-                          // if (res2) {
+                           await _auth.sendActivateEmail(email);
                              userNoti.getRegisterState(1,res);
-                          // } else {
-                          //   userNoti.getRegisterState(0);
-                          //   print('Faile to send email');
-                          // }
                         }
                       }
                     },

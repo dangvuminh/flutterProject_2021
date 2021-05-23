@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_learning_app/components/home/courses/rating/ratingList.dart';
 import 'package:online_learning_app/services/course_service.dart';
 import 'package:online_learning_app/services/payment_service.dart';
 import 'package:online_learning_app/services/user_service.dart';
@@ -30,6 +31,8 @@ class _CourseDetailState extends State<CourseDetail> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.courseData['courseID']);
+     print(widget.courseData['token']);
     String getContentInArray(List<String>array){
       String content = ' ';
       for(int i = 0;i<array.length;i++ ){
@@ -89,8 +92,10 @@ class _CourseDetailState extends State<CourseDetail> {
                     SizedBox(width: 15.0,),
                          RaisedButton(
                         onPressed: () async {
-                            var res = Payment_Service().buyCourses(widget.courseData['token'], snapshot.data[0].id);
-                            print(res);
+                           await Payment_Service().buyCourses(widget.courseData['token'], snapshot.data[0].id);
+                           setState(() {
+                             _owningState = User_Service().checkCourseOwningState(widget.courseData['courseID'], widget.courseData['token']);
+                           });
                         },
                         color: Colors.lightBlue[600],
                         padding: EdgeInsets.fromLTRB(35,15,35,15),

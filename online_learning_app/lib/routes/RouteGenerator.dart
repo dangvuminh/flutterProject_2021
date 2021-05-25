@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:online_learning_app/components/home/account/SearchHistoryList.dart';
 import 'package:online_learning_app/components/home/account/changeEmail.dart';
 import 'package:online_learning_app/components/home/account/changePassword.dart';
 import 'package:online_learning_app/components/home/account/profileUpdate.dart';
@@ -62,6 +63,13 @@ class RouteGenerator{
       case '/changeEmail':{
         return MaterialPageRoute(
             builder: (context)=> ChangeEmail(
+              userInfo: args,
+            )
+        );
+      }
+      case '/searchHistory':{
+        return MaterialPageRoute(
+            builder: (context)=> SearchHistoryList(
               userInfo: args,
             )
         );

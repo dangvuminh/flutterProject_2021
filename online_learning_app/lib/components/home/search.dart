@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:online_learning_app/models/userInfo.dart';
 import 'package:online_learning_app/services/course_service.dart';
+import 'package:provider/provider.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -20,6 +22,7 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
+    final UserProfile user = Provider.of<UserProfile>(context);
     return Container(
       child: Column(
         children: [
@@ -70,17 +73,29 @@ class _SearchState extends State<Search> {
                       child: ListView.builder(
                           itemCount: snapshot.data.length,
                           itemBuilder: (context,index){
-                            return Container(
-                              color: Colors.grey[200],
-                              margin: EdgeInsets.all(15.0),
-                              child: Column(
-                                    children: [
-                                      Image(image: NetworkImage(snapshot.data[index].imageUrl)),
-                                      Text(snapshot.data[index].title),
-                                      Text('${snapshot.data[index].price} vnd'),
-                                      Text(snapshot.data[index].name)
-                                    ],
-                                  ),
+                            return InkWell(
+                              onTap: (){
+                                Navigator.pushNamed(
+                                    context, '/courseDetail',
+                                    arguments: {
+                                    'courseID': snapshot.data[index].id,
+                                    'userID': user.userInfo.id,
+                                    'token': user.token,
+                                    }
+                                );
+                              },
+                              child: Container(
+                                color: Colors.grey[200],
+                                margin: EdgeInsets.all(15.0),
+                                child: Column(
+                                      children: [
+                                        Image(image: NetworkImage(snapshot.data[index].imageUrl)),
+                                        Text(snapshot.data[index].title),
+                                        Text('${snapshot.data[index].price} vnd'),
+                                        Text(snapshot.data[index].name)
+                                      ],
+                                    ),
+                              ),
                             );
 
                           }

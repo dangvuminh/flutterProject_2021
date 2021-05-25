@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:online_learning_app/models/course.dart';
 import 'package:online_learning_app/models/courseWithLessons.dart';
+import 'package:online_learning_app/models/searchHistory.dart';
 import 'package:online_learning_app/models/searchedCourse.dart';
 
 
@@ -205,6 +206,33 @@ class Course_Service{
        return null;
      }
 
+    }
+
+    Future getSearchHistory(String bearer) async{
+      Map<String, String> bearerHeader = {
+        'Authorization': 'Bearer $bearer'
+      };
+      try{
+        var res = await client.get(
+          'http://115.78.232.219:3100/course/search-history',
+          headers: bearerHeader
+        );
+        if(res.statusCode == 200){
+          List<SearchHistory> list = [];
+          var jsonData = json.decode(res.body);
+          if(jsonData['payload']['data'] != null){
+            for(int i = 0 ; i<jsonData['payload']['data'].length; i++){
+              list.add(SearchHistory.fromJson(jsonData['payload']['data'][i]));
+            }
+            return list;
+          }
+
+        }
+        return null;
+      }catch(err){
+        print(err);
+        return null;
+      }
     }
 
 // ____________________ END________________

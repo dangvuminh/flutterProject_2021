@@ -271,6 +271,27 @@ class _AccountState extends State<Account> {
                           ),
                         ),
                       ),
+                      Divider(height: 1.0,color: Colors.grey[400],),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.pushNamed(
+                                context, '/searchHistory',
+                                arguments: {
+                                  'token': widget.token
+                                }
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              Icon(Icons.email_outlined),
+                              SizedBox(width:10.0),
+                              Text('Search History'),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 )

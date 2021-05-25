@@ -30,7 +30,8 @@ class _ActivateEmailState extends State<ActivateEmail> {
               ),
               RaisedButton(
                   child: Text('Activate Account'),
-                  onPressed: (){
+                  onPressed: () async {
+                    //await _auth.sendActivateEmail(email);
                     userNoti.getRegisterState(0, null);
                   }
                   )

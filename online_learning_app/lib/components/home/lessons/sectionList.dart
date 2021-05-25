@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_learning_app/components/home/courses/rating/ratingList.dart';
 import 'package:online_learning_app/services/course_service.dart';
 import 'package:online_learning_app/sharedTemplate/functions/sharedFunctions.dart';
 
@@ -212,6 +213,14 @@ class _SectionListState extends State<SectionList> {
                                   ),
                                 );
                               }),
+                        ),
+                        SizedBox(height: 10.0,),
+                        Divider(height: 1.0,color: Colors.grey,),
+                        SizedBox(height: 10.0,),
+                        Text('Comments:',style:TextStyle(fontSize: 25.0)),
+                        RatingList(
+                          courseID: widget.courseData['courseID'],
+                          token: widget.courseData['token'],
                         )
                       ],
                     ),

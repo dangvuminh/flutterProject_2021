@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:online_learning_app/models/lessonDetail.dart';
+import 'package:online_learning_app/models/videoModel.dart';
 import 'package:online_learning_app/services/lesson_service.dart';
 import 'package:online_learning_app/services/video_service.dart';
 import 'package:online_learning_app/video/youtubeVideo.dart';
@@ -14,6 +16,7 @@ class LessonDetail extends StatefulWidget {
 class _LessonDetailState extends State<LessonDetail> {
   Future<dynamic> _lessonDetail;
   Future<dynamic> _video;
+
   @override
   void initState(){
     _lessonDetail = Lesson_Service().getLessonDetail(widget.lesson['courseID'],
@@ -34,10 +37,10 @@ class _LessonDetailState extends State<LessonDetail> {
           children: [
             InkWell(
               onTap: () {
-                setState(() {
-                  _lessonDetail =  Lesson_Service().getLessonDetail(widget.lesson['courseID'],
+                setState((){
+                  _lessonDetail = Lesson_Service().getLessonDetail(widget.lesson['courseID'],
                       nextLesson, widget.lesson['token']);
-                  _video =  Video_Service().getLessonVideo(widget.lesson['courseID'],
+                  _video = Video_Service().getLessonVideo(widget.lesson['courseID'],
                       nextLesson,widget.lesson['token']);
                 });
               },
